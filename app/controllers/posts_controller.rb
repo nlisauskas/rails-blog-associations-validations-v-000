@@ -29,7 +29,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         if params[:post][:tag_ids]
-          params[:post][:tag_ids]
+          params[:post][:tag_ids].each {|t| PostTag.create(post_id: @post_id, tag_id: t.to_i)}
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render action: 'show', status: :created, location: @post }
       else
